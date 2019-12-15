@@ -1,0 +1,47 @@
+
+
+import java.util.*;
+
+class CelebrityProblem{
+    static int mat[][];
+    static boolean knows(int a,int b)
+    {
+       return mat[a][b]==1?true:false;
+    }
+    static int findCelebrity(int mat[][],int row,int col)
+    {
+        Stack<Integer>st=new Stack<>();
+        for(int i=0;i<col;i++)
+           st.push(i);
+        while(st.size()>1)
+        {
+            int a=st.pop();
+            int b=st.pop();
+            if(knows(a,b))
+               st.push(b);
+             else
+             st.push(a);
+        }
+        int c=st.pop();
+        for(int i=0;i<col;i++)
+        {
+            if(i!=c&&(!knows(i,c)||knows(c,i)))
+               return -1;
+        }
+        return c;
+    }
+	public static void main (String[] args) {
+             Scanner sc=new Scanner(System.in);
+             int row=sc.nextInt();
+             int col=sc.nextInt();
+             mat=new int[row][col];
+             for(int i=0;i<row;i++)
+             {
+                 for(int j=0;j<col;j++)
+                 {
+                     mat[i][j]=sc.nextInt();
+                 }
+             }
+             System.out.println(findCelebrity(mat,row,col));
+	}
+}
